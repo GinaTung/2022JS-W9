@@ -10,10 +10,10 @@ function renderC3() {
   let total = {};
   orderData.forEach(function (item) {
     item.products.forEach(function (productItem) {
-      if (total[productItem.category] == undefined) {
-        total[productItem.category] = productItem.price * productItem.quantity;
+      if (total[productItem.title] == undefined) {
+        total[productItem.title] = productItem.price * productItem.quantity;
       } else {
-        total[productItem.category] += productItem.price * productItem.quantity;
+        total[productItem.title] += productItem.price * productItem.quantity;
       }
     });
     console.log(total);
