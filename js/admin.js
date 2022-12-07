@@ -35,6 +35,9 @@ function renderC3() {
     data: {
       type: "pie",
       columns: newData,
+      colors: {
+        pattern: ["#FF0000", "#F97600", "#F6C600", "#60B044"],
+      },
     },
   });
 }

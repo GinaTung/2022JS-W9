@@ -19,22 +19,45 @@ function renderC3() {
     console.log(total);
   });
   // 做出資料關聯
-  let categoryAry = Object.keys(total);
-  console.log(categoryAry);
-  let newData = [];
-  categoryAry.forEach(function (item) {
+  let originAry = Object.keys(total);
+  console.log(originAry);
+  let rankSortAry = [];
+  originAry.forEach(function (item) {
     let ary = [];
     ary.push(item);
     ary.push(total[item]);
-    newData.push(ary);
+    rankSortAry.push(ary);
   });
-  console.log(newData);
+  console.log(rankSortAry);
+
+  // sort排序
+  rankSortAry.sort(function (a, b) {
+    // a及b裡物件第二筆比較
+    return a[1] - b[1];
+  });
+
+  // 如果比數超過4筆以上，就統整為其他
+  if (rankSortAry.length > 3) {
+    let otherTotal = 0;
+    rankSortAry.forEach(function (item, index) {
+      // 第四筆資料數值加總
+      if (index > 2) {
+        otherTotal += rankSortAry[index][1];
+      }
+    });
+    rankSortAry.splice(3, rankSortAry.length - 1);
+    rankSortAry.push(["其他", otherTotal]);
+  }
+
   // C3.js
   let chart = c3.generate({
     bindto: "#chart", // HTML 元素綁定
     data: {
       type: "pie",
-      columns: newData,
+      columns: rankSortAry,
+      colors: {
+        pattern: ["#DACBFF", "#9D7FEA", "#5434A7", "#301E5F"],
+      },
     },
   });
 }
